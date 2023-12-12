@@ -4,42 +4,25 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>coffee-machine</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <!--
+    Le tag group id n'est pas obligatoire ici car le groupId est déjà défini par le parent
     <groupId>fr.imt.cours.IL-Maven-2023</groupId>
-    <packaging>pom</packaging>
+    -->
+    <artifactId>coffee-machine-machine</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
-    <modules>
-        <module>coffee-machine-storage</module>
-        <module>coffee-machine-machine</module>
-    </modules>
+    <parent>
+        <artifactId>coffee-machine</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <groupId>fr.imt.cours.IL-Maven-2023</groupId>
+    </parent>
 
     <properties>
-        <log4j.version>2.19.0</log4j.version>
         <cucumber.version>7.8.1</cucumber.version>
         <junit.version>5.9.1</junit.version>
         <jdk.version>18</jdk.version>
     </properties>
-
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.6.3</version>
-                <configuration>
-                    <source>18</source>
-                    <failOnError>false</failOnError>
-                    <doclint>none</doclint>
-                    <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
-                    <sourceFileExcludes>
-                        <exclude>**/test/*.java</exclude>
-                        <exclude>**MainCoffee.java</exclude>
-                    </sourceFileExcludes>
-                </configuration>
-            </plugin>
-        </plugins>
-    </reporting>
 
     <build>
         <plugins>
@@ -59,10 +42,28 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M7</version>
             </plugin>
-
-            <!-- Plugin Jacoco for code coverage -->
             <plugin>
-                <!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>createThriftDir</id>
+                        <phase>test</phase>
+                        <configuration>
+                            <tasks>
+                                <!--suppress UnresolvedMavenProperty -->
+                                <delete dir="${env.HOME}/jacoco"/>
+                                <!--suppress UnresolvedMavenProperty -->
+                                <mkdir dir="${env.HOME}/jacoco"/>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.8</version>
@@ -85,11 +86,9 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- Plugin Jacoco for building the final jar -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.3.0</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -111,8 +110,8 @@
                 </executions>
             </plugin>
         </plugins>
-    </build>
 
+    </build>
     <dependencies>
         <!-- JUnit 5 dependency -->
         <dependency>
@@ -140,21 +139,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-project-info-reports-plugin</artifactId>
-            <version>3.1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>2.22.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.22.0</version>
-        </dependency>
-        <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
             <version>${cucumber.version}</version>
@@ -166,7 +150,20 @@
             <version>${cucumber.version}</version>
             <scope>test</scope>
         </dependency>
-    </dependencies>
+        <dependency>
+            <groupId>fr.imt.cours.IL-Maven-2023</groupId>
+            <artifactId>coffee-machine-machine</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>fr.imt.cours.IL-Maven-2023</groupId>
+            <artifactId>coffee-machine-storage</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
 
+
+    </dependencies>
 
 </project>

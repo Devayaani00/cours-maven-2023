@@ -18,18 +18,9 @@
     </parent>
 
     <properties>
-        <cucumber.version>7.8.1</cucumber.version>
-        <junit.version>5.9.1</junit.version>
-        <jdk.version>18</jdk.version>
+        <maven.compiler.source>18</maven.compiler.source>
+        <maven.compiler.target>18</maven.compiler.target>
     </properties>
-
-    <build>
-        <plugins>
-        </plugins>
-    </build>
-
-    <dependencies>
-    </dependencies>
 
 
 </project>

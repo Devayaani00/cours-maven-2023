@@ -6,7 +6,6 @@ import fr.imt.coffee.machine.exception.CoffeeTypeCupDifferentOfCoffeeTypeTankExc
 import fr.imt.coffee.machine.exception.LackOfWaterInTankException;
 import fr.imt.coffee.machine.exception.MachineNotPluggedException;
 import fr.imt.coffee.storage.cupboard.coffee.type.CoffeeType;
-import fr.imt.coffee.storage.cupboard.container.*;
 import fr.imt.coffee.storage.cupboard.exception.CupNotEmptyException;
 
 public class EspressoCoffeeMachine extends CoffeeMachine{
